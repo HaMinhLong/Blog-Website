@@ -6,6 +6,8 @@ module.exports = gql`
     title: String!
     content: String!
     selectedFile: String!
+    comments: [Comment]!
+    views: [View]!
     createdAt: String!
     username: String!
   }
@@ -26,6 +28,17 @@ module.exports = gql`
     token: String!
     createdAt: String!
     # selectedFile: String!
+  }
+  type Comment {
+    id: ID!
+    username: String!
+    body: String!
+    createdAt: String!
+  }
+  type View {
+    id: ID!
+    username: String!
+    createdAt: String!
   }
   input RegisterInput {
     email: String!
@@ -54,5 +67,14 @@ module.exports = gql`
       content: String!
     ): Message!
     deleteMessage(messageId: ID!): String!
+
+    createComment(postId: String!, body: String!): Post!
+    deleteComment(postId: ID!, commentId: ID!): Post!
+
+    viewPost(postId: ID!): Post!
+  }
+  type Subscription {
+    newPost: Post!
+    newMessage: Message!
   }
 `;
