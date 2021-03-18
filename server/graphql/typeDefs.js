@@ -6,7 +6,7 @@ module.exports = gql`
     title: String!
     content: String!
     selectedFile: String!
-    createAt: String!
+    createdAt: String!
     username: String!
   }
   type Message {
@@ -15,7 +15,7 @@ module.exports = gql`
     fullName: String!
     phoneNumber: String!
     content: String!
-    createAt: String!
+    createdAt: String!
     username: String!
   }
   type User {
@@ -36,10 +36,23 @@ module.exports = gql`
   }
   type Query {
     getPosts: [Post]
+    getPost(postId: ID!): Post
     getMessages: [Message]
+    getMessage(messageId: ID!): Message
   }
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
+
+    createPost(title: String!, content: String!, selectedFile: String!): Post!
+    deletePost(postId: ID!): String!
+
+    createMessage(
+      email: String!
+      fullName: String!
+      phoneNumber: String!
+      content: String!
+    ): Message!
+    deleteMessage(messageId: ID!): String!
   }
 `;
