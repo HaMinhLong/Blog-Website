@@ -55,5 +55,25 @@ module.exports = {
         throw new Error(error);
       }
     },
+    async viewPost(_, { postId }, context) {
+      const { username } = checkAuth(context);
+      const post = await Post.findById(postId);
+      if (post) {
+        post.views.push({
+          username: username,
+          createdAt: new Date().toISOString(),
+        });
+
+        await post.save();
+        return post;
+      } else {
+        throw new UserInputError("Post not found");
+      }
+    },
+  },
+  Subscription: {
+    newPost: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator("NEW_POST"),
+    },
   },
 };

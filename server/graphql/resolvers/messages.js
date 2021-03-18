@@ -56,4 +56,9 @@ module.exports = {
       }
     },
   },
+  Subscription: {
+    newMessage: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator("NEW_MESSAGE"),
+    },
+  },
 };
